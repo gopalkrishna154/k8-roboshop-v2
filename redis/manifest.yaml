@@ -1,76 +1,76 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: redis-headless
+  name: mysql-headless
   namespace: roboshop
   labels:
     project: roboshop
-    component: redis
+    component: mysql
     tier: db
 spec:
   ports:
   - protocol: TCP
-    port: 6379
-    targetPort: 6379
+    port: 3306
+    targetPort: 3306
   clusterIP: None # headless service
   selector:
     project: roboshop
-    component: redis
+    component: mysql
     tier: db
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: redis
+  name: mysql
   namespace: roboshop
   labels:
     project: roboshop
-    component: redis
+    component: mysql
     tier: db
 spec:
   ports:
   - protocol: TCP
-    port: 6379
-    targetPort: 6379
+    port: 3306
+    targetPort: 3306
   selector:
     project: roboshop
-    component: redis
+    component: mysql
     tier: db
 ---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: redis
+  name: mysql
   namespace: roboshop
   labels: 
     project: roboshop
-    component: redis
+    component: mysql
     tier: db
 spec:
   selector:
     matchLabels:
       project: roboshop
-      component: redis
+      component: mysql
       tier: db
-  serviceName: "redis-headless"
+  serviceName: "mysql-headless"
   replicas: 1 # by default is 1
   template:
     metadata:
       labels:
         project: roboshop
-        component: redis
+        component: mysql
         tier: db
     spec:
       containers:
-      - name: redis
-        image: redis:7
+      - name: mysql
+        image: joindevops/mysql:4.0.0
         volumeMounts:
-        - name: redis
-          mountPath: /data
+        - name: mysql
+          mountPath: /var/lib/mysql
   # pvc         
   volumeClaimTemplates:
   - metadata:
-      name: redis
+      name: mysql
     spec:
       accessModes: [ "ReadWriteOnce" ]
       storageClassName: "roboshop-ebs"
