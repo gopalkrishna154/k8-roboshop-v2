@@ -73,7 +73,7 @@ spec:
       - name: mysql
         image: joindevops/mysql:4.0.0
         args: ["--mysql-native-password=ON"]
-        envrom:
+        envFrom:
         - configMapRef: 
             name: mysql
         volumeMounts:
