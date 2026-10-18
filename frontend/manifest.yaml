@@ -128,11 +128,11 @@ spec:
           limits:
             cpu: "100m"
             memory: "128Mi"
-          volumeMounts:
-            - name: nginx-config
-              mountPath: /etc/nginx/nginx.conf
-              subPath: nginx.conf
-              readOnly: true
+        volumeMounts:
+        - name: nginx-config
+          mountPath: /etc/nginx/nginx.conf
+          subPath: nginx.conf
+          readOnly: true
 
       volumes:
         - name: nginx-config
