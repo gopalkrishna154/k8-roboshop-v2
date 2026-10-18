@@ -123,8 +123,8 @@ spec:
           image: joindevops/frontend:4.0.0
           resources:
             requests:
-            cpu: "100m"
-            memory: "128Mi"
+             cpu: "100m"
+             memory: "128Mi"
           limits:
             cpu: "100m"
             memory: "128Mi"
